@@ -21,6 +21,7 @@ namespace Project.Controllers.API
             var Info = _ProductDb.Products.ToList();
             return Info;
         }
+        //新增
         [HttpPost]
         public void AddOnce([FromBody]Product ProductInfo)
         {
@@ -36,11 +37,12 @@ namespace Project.Controllers.API
             }
         }
 
-        //新增
-        [HttpPost]
+        //修改
+        [HttpPut]
         public void EditInfo([FromBody] Product ProductInfo)
         {
             _ProductDb.Products.Add(ProductInfo);
+            _ProductDb.Entry<Product>(ProductInfo).State = EntityState.Modified;
             try
             {
                 _ProductDb.SaveChanges();
@@ -51,6 +53,7 @@ namespace Project.Controllers.API
                 response.StatusCode = 400;
             }
         }
+        //刪除
         [HttpDelete]
         public void DeleteProduct([FromQuery(Name ="id")] int id)
         {
