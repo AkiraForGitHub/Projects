@@ -25,7 +25,8 @@ namespace Project.Controllers.API
         [HttpPost]
         public void AddOnce([FromBody]Product ProductInfo)
         {
-            _ProductDb.Products.Add(ProductInfo);
+            //_ProductDb.Products.Add(ProductInfo);
+            _ProductDb.Entry<Product>(ProductInfo).State = EntityState.Added;
             try
             {
                 _ProductDb.SaveChanges();
@@ -53,6 +54,7 @@ namespace Project.Controllers.API
                 response.StatusCode = 400;
             }
         }
+
         //刪除
         [HttpDelete]
         public void DeleteProduct([FromQuery(Name ="id")] int id)
