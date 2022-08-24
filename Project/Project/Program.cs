@@ -18,7 +18,7 @@ builder.Services.AddCors(opt =>
         .AllowAnyOrigin();
     });
 });
-builder.Services.AddScoped<IProductFeatures, ProductFeatures>();
+builder.Services.AddTransient<IProductFeatures, ProductFeatures>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
