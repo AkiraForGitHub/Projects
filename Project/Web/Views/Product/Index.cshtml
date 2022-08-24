@@ -96,7 +96,7 @@
                     "productName": self.productName,
                     "price": self.price
                 }
-                fetch("https://localhost:5001/api/ProductAPI/Addonce", {
+                fetch("https://localhost:7018/api/ProductAPI/Addonce", {
                     method: "POST",
                     body: JSON.stringify(curdata),
                     headers: {
@@ -110,7 +110,7 @@
             },
             GetAll: function() {
                 let self = this;
-                fetch('https://localhost:5001/api/ProductAPI/GetAllProduct').then(res => {
+                fetch('https://localhost:7018/api/ProductAPI/GetAllProduct').then(res => {
                     return res.json();
                 }).then(res => {
                     self.AllProduct = res;
@@ -118,7 +118,7 @@
             },
             // fetch(`/api/ProductAPI/DeleteProduct?id=${this.id}`
             DeleteInfo: function() {
-                fetch(`https://localhost:5001/api/ProductAPI/DeleteProduct?id=`+ this.deleteId, {
+                fetch(`https://localhost:7018/api/ProductAPI/DeleteProduct?id=`+ this.deleteId, {
                     method: "DELETE"
                 }).then(res => {
                     vm.$nextTick(function() {
@@ -168,7 +168,7 @@
                     "price": this.Editprice,
                     "productId": this.EditId
                 }
-                fetch("https://localhost:5001/api/ProductAPI/EditInfo", {
+                fetch("https://localhost:7018/api/ProductAPI/EditInfo", {
                     method: "PUT",
                     body: JSON.stringify(curdata),
                     headers: {

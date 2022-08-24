@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Project.Interface;
 using Project.Models;
 
 namespace Project.Controllers.API
@@ -9,67 +10,36 @@ namespace Project.Controllers.API
     [ApiController]
     public class ProductsAPIController : ControllerBase
     {
-        private readonly ProductContext _ProductDb;
+        private readonly IProductFeatures _productFeatures;
 
-        public ProductsAPIController(ProductContext productDb)
+        public ProductsAPIController(IProductFeatures productFeatures)
         {
-            _ProductDb = productDb;
+            _productFeatures = productFeatures;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProduct()
         {
-            var Info = _ProductDb.Products.ToList();
-            return Info;
+            return _productFeatures.GetAllProduct();
         }
         //新增
         [HttpPost]
         public void AddOnce([FromBody]Product ProductInfo)
         {
-            //_ProductDb.Products.Add(ProductInfo);
-            _ProductDb.Entry<Product>(ProductInfo).State = EntityState.Added;
-            try
-            {
-                _ProductDb.SaveChanges();
-            }
-            catch
-            {
-                HttpResponse response = this.Response;
-                response.StatusCode = 400;
-            }
+             _productFeatures.AddOnce(ProductInfo);
         }
 
         //修改
         [HttpPut]
         public void EditInfo([FromBody] Product ProductInfo)
         {
-            _ProductDb.Products.Add(ProductInfo);
-            _ProductDb.Entry<Product>(ProductInfo).State = EntityState.Modified;
-            try
-            {
-                _ProductDb.SaveChanges();
-            }
-            catch
-            {
-                HttpResponse response = this.Response;
-                response.StatusCode = 400;
-            }
+            _productFeatures.EditInfo(ProductInfo);
         }
 
         //刪除
         [HttpDelete]
         public void DeleteProduct([FromQuery(Name ="id")] int id)
         {
-            var info = _ProductDb.Products.Where(p => p.ProductId == id).FirstOrDefault<Product>();
-            _ProductDb.Entry<Product>(info).State = EntityState.Deleted;
-            try
-            {
-                _ProductDb.SaveChanges();
-            }
-            catch
-            {
-                HttpResponse response = this.Response;
-                response.StatusCode = 400;
-            }
+            _productFeatures.DeleteProduct(id);
         }
     }
 }

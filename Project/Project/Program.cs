@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Project.Features;
+using Project.Interface;
 using Project.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services.AddCors(opt =>
         .AllowAnyOrigin();
     });
 });
+builder.Services.AddScoped<IProductFeatures, ProductFeatures>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
